@@ -1,3 +1,17 @@
+import adminRoutes from "./routes/admin.js";
+import authRoutes from "./routes/auth.js";
+import userRoutes from "./routes/users.js";
+import postRoutes from "./routes/posts.js";
+import commentRoutes from "./routes/comments.js";
+import likeRoutes from "./routes/likes.js";
+import followRoutes from "./routes/follows.js";
+import notificationRoutes from "./routes/notifications.js";
+import messageRoutes from "./routes/messages.js";
+import stickerRoutes from "./routes/stickers.js";
+import galleryRoutes from "./routes/gallery.js";
+import searchRoutes from "./routes/search.js";
+import exploreRoutes from "./routes/explore.js";
+import themeRoutes from "./routes/themes.js";
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
@@ -52,6 +66,42 @@ app.use(session({
 
 // Archivos públicos
 app.use(express.static(path.join(__dirname, "public")));
+// API
+app.use("/admin", adminRoutes);
+app.use("/auth", authRoutes);
+app.use("/users", userRoutes);
+app.use("/posts", postRoutes);
+app.use("/comments", commentRoutes);
+app.use("/likes", likeRoutes);
+app.use("/follows", followRoutes);
+app.use("/notifications", notificationRoutes);
+app.use("/messages", messageRoutes);
+app.use("/stickers", stickerRoutes);
+app.use("/gallery", galleryRoutes);
+app.use("/search", searchRoutes);
+app.use("/explore", exploreRoutes);
+app.use("/themes", themeRoutes);
+
+// Estado de la API
+app.get("/api", (req, res) => {
+    res.json({
+        success: true,
+        name: "AngelSpace",
+        version: "1.0.0",
+        status: "online",
+        message: "Bienvenido a la API de AngelSpace 🌸"
+    });
+});
+
+// Estado del servidor
+app.get("/status", (req, res) => {
+    res.json({
+        server: "online",
+        uptime: process.uptime(),
+        timestamp: new Date(),
+        node: process.version
+    });
+});
 
 // Ruta principal
 app.get("/", (req, res) => {
